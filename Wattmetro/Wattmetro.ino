@@ -2,9 +2,6 @@
 
 
 // Arduino UNO tem 5,0 volts com um valor máximo de ADC de 1023 passos
-// ACS712 5A usa 185 mV por A
-// ACS712 20A usa 100 mV por A
-// ACS712 30A usa 66 mV por A
 
 ACS712  ACS(A0, 5.0, 1023, 100);
 //  ESP 32 example (pode requer resistores para diminuir a tensão lógica)
@@ -40,10 +37,15 @@ void loop() {
 }
 
 void sensor_corrente1(){
-   
+
+// ACS712 5A usa 185 mV por A
+// ACS712 20A usa 100 mV por A
+// ACS712 30A usa 66 mV por A
+  float const calibrar = 0.100;
+  
   int adc = analogRead(A0);
   float U = adc * 5 / 1023.0;
-  float I = (U - 2.5) / 0.185;
+  float I = (U - 2.5) / calibrar;
   
   Serial.print(I);
   delay(100);
@@ -64,9 +66,11 @@ void sensor_corrente2(){
 
 void divisor_tensao(){
 
-  float const Vref = 4.69;
+  float const Vref = 4.1;
+  float const Vt = 28.985;
   Vlida = analogRead(A2); //FAZ A LEITURA DO PINO ANALÓGICO E ARMAZENA NA VARIÁVEL O VALOR LIDO
-  Vin = (5*Vlida*(Vref/1023));
+  
+  Vin = (Vt*Vlida*(Vref/1023));
   
   Serial.println(Vin,2); //IMPRIME NA SERIAL O VALOR DE TENSÃO DC MEDIDA E LIMITA O VALOR A 2 CASAS DECIMAIS
   delay(100); 
@@ -82,7 +86,7 @@ void temperatura(){
   valorSensor = analogRead(A1);
   
   //Conversão para tensão
-  tensaoSaida = (valorSensor*5000)/1024;[
+  tensaoSaida = (valorSensor*5000)/1023;[
 
   //Calculo de temperatura
   tempC = tensaoSaida/10;
