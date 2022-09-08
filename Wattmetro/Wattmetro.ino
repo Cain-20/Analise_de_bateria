@@ -15,6 +15,7 @@ ACS712  ACS(A0, 5.0, 1023, 100);
 
   int Vlida = 0;
   float Vin = 0;
+  int valorSensor = 0;
   
 void setup() {
 
@@ -70,5 +71,22 @@ void divisor_tensao(){
   Serial.println(Vin,2); //IMPRIME NA SERIAL O VALOR DE TENSÃO DC MEDIDA E LIMITA O VALOR A 2 CASAS DECIMAIS
   delay(100); 
 
+}
+void temperatura(){
+//Especificações  LM34 , LM335, LM35
+//Escala Usada , Fahrenheit , Kelvin , Celsius
+//Temperatura de trabalho em °C, -50°C até 150°C ,-40°C até 100°C ,-55°C até 150°C
+//Linearidade, 10 mV/°F , 10 mV/K ,10 mV/°C
+//Precisão a 25 °C,  ± 1°F, ± 1 K ,± 0.5°C
+
+  valorSensor = analogRead(A1);
+  
+  //Conversão para tensão
+  tensaoSaida = (valorSensor*5000)/1024;[
+
+  //Calculo de temperatura
+  tempC = tensaoSaida/10;
+
+  Serial.print(tempC);
 }
   
