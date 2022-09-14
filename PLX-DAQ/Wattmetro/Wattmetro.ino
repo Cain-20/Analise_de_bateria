@@ -48,13 +48,9 @@ void sensor_corrente1(){// Obteve um melhor resultado de corrente por essa funç
   
   int adc = analogRead(A0);
   float U = adc * 5 / 1023.0;
-<<<<<<< HEAD
-  float I = (U - 2.5) / 0.66;
-=======
   float I = (U - 2.5) / calibrar;
 
   //float P = U * I;
->>>>>>> 21e316fdbe3a7012ad7684dff838d7987fa78cda
   
   Serial.print(I);
 
@@ -73,24 +69,16 @@ void sensor_corrente2(){
 
 void divisor_tensao(){
 
-<<<<<<< HEAD
-  float const Vref = 4.4;
-  Vlida = analogRead(A2); //FAZ A LEITURA DO PINO ANALÓGICO E ARMAZENA NA VARIÁVEL O VALOR LIDO
-  Vin = (20.975*Vlida*(Vref/1023));
-=======
   float const Vref = 4.1;
   float const Vs = 28.985;
   Vlida = analogRead(A2); //FAZ A LEITURA DO PINO ANALÓGICO E ARMAZENA NA VARIÁVEL O VALOR LIDO
   
   Vin = (Vs*Vlida*(Vref/1023));
->>>>>>> 21e316fdbe3a7012ad7684dff838d7987fa78cda
   
   Serial.println(Vin,2); //IMPRIME NA SERIAL O VALOR DE TENSÃO DC MEDIDA E LIMITA O VALOR A 2 CASAS DECIMAIS
   delay(1000); 
 
 }
-<<<<<<< HEAD
-=======
 void temperatura(){
 //Especificações  LM34 , LM335, LM35
 //Escala Usada , Fahrenheit , Kelvin , Celsius
@@ -109,4 +97,3 @@ void temperatura(){
   Serial.print(tempC);
 }
   
->>>>>>> 21e316fdbe3a7012ad7684dff838d7987fa78cda
