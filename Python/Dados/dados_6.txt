@@ -1,0 +1,6 @@
+Data, Hora, Corrente, Tensão
+Data, Hora, Corrente, Tensão
+Data, Hora, Corrente, Tensão
+Data, Hora, Corrente, Tensão
+Data, Hora, Corrente, Tensão
+Data, Hora, Corrente, Tensão

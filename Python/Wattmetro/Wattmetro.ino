@@ -9,37 +9,36 @@
 
 //Com auxilio de um multimetro, verifique a tensão fornecida na linha de 5V pela sua placa ARDUINO  e digite no lugar do valor atual.
 //ESSA ETAPA É FUNDAMELTAL PARA GARANTIR A PRECISÃO DO SEU VOLTIMETRO!
-
-  int Vlida = 0;
-  float Vin = 0;
-  int valorSensor = 0;
   
 void setup() {
 
   
   //Para ESP32 115200 na Serial.begin
   Serial.begin(9600);
-  ACS.autoMidPoint();
-  //  Serial.println(ACS.getMidPoint());
+  //ACS.autoMidPoint();
+  //Serial.println(ACS.getMidPoint());
 
-  Serial.println("LABEL, Data, Hora, Corrente, Tensão");
+  Serial.println("Data, Hora, Corrente, Tensão");
 }
 
 void loop() {
 
-  Serial.print("DATA, DATE, TIME,");
+  //Serial.print("DATA, DATE, TIME,");
   sensor_corrente1();
   Serial.print(",");
   divisor_tensao();
   Serial.print(",");
   temperatura();
   Serial.print(",");
-  Serial.println("ROW,SET,2");
+  //Serial.println("ROW,SET,2");
 
 }
 
 void sensor_corrente1(){// Obteve um melhor resultado de corrente por essa função.
 
+  int Vlida = 0;
+  float Vin = 0;
+  int valorSensor = 0;
 // Sensibilidade do sensor
 // 5A usa 185 mV por A
 // 20A usa 100 mV por A
@@ -55,16 +54,16 @@ void sensor_corrente1(){// Obteve um melhor resultado de corrente por essa funç
   Serial.print(I);
 
 }
-void sensor_corrente2(){
-  float I = 0;
-  //float U = 72;
-  I = ACS.mA_DC();
-
-  // Para caulcular potência, só multiplicar pela tensão nominal da bateria
-  //float P = U * I;
-
-  Serial.print(I);
-}
+//void sensor_corrente2(){
+//  float I = 0;
+//  //float U = 72;
+//  I = ACS.mA_DC();
+//
+//  // Para caulcular potência, só multiplicar pela tensão nominal da bateria
+//  //float P = U * I;
+//
+//  Serial.print(I);
+//}
 
 
 void divisor_tensao(){
@@ -85,11 +84,12 @@ void temperatura(){
 //Temperatura de trabalho em °C, -50°C até 150°C ,-40°C até 100°C ,-55°C até 150°C
 //Linearidade, 10 mV/°F , 10 mV/K ,10 mV/°C
 //Precisão a 25 °C,  ± 1°F, ± 1 K ,± 0.5°C
-
+ int tensaoSaida = 0;
+ float tempC = 0;
   valorSensor = analogRead(A1);
   
   //Conversão para tensão
-  tensaoSaida = (valorSensor*5000)/1023;[
+  tensaoSaida = (valorSensor*5000)/1023;
 
   //Calculo de temperatura
   tempC = tensaoSaida/10;
