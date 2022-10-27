@@ -1,30 +1,39 @@
-from codecs import utf_8_decode, utf_8_encode
-from encodings import utf_8
 from serial import Serial, SerialException
+import serial.tools.list_ports
 from time import sleep
 
 
+i = 0
+
 def dados(cont, data):
-    print('OK')
     ent =  'Dados/dados_'+ str(cont) + '.txt'
     file = open(ent, "at")
     file.write(data)
     file.close()
 
-i = 0
+def find_arduino(port=None):
+    """Captura o nome da porta que o Arduino se encontra"""
+    if port is None:
+        ports = serial.tools.list_ports.comports()
+        for p in ports:
+            if p.manufacturer is not None and "Arduino" in p.manufacturer:
+                port = p.device
+    return port
+
 
 while True:
     try:
-        ser = Serial('COM4')
+        port = find_arduino()
+        ser = Serial(port)
         sleep(2) # Entre 1.5s a 2s
-        if not ser.isOpen():
-            print('Close')
-        else:           
+        while port!=None:
+            print('ok') 
             arduinoS = ser.readline().decode("utf-8")
             dados(i, arduinoS)
-            ser.close()
+            port = find_arduino()
+        ser.close() 
         
     except SerialException:
-        i = i + 1
+        i = i + 1 
         print ('Error')
-        sleep(1)
+        sleep(2)
